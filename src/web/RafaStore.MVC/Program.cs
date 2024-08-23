@@ -1,4 +1,4 @@
-namespace RafaStore.WebApp.MVC
+namespace RafaStore.MVC
 {
     public class Program
     {

@@ -12,10 +12,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["RafaStore.Identidade.API/RafaStore.Identidade.API.csproj", "RafaStore.Identidade.API/"]
-RUN dotnet restore "./RafaStore.Identidade.API/RafaStore.Identidade.API.csproj"
+COPY ["src/services/RafaStore.Identidade.API/RafaStore.Identidade.API.csproj", "src/services/RafaStore.Identidade.API/"]
+RUN dotnet restore "./src/services/RafaStore.Identidade.API/RafaStore.Identidade.API.csproj"
 COPY . .
-WORKDIR "/src/RafaStore.Identidade.API"
+WORKDIR "/src/src/services/RafaStore.Identidade.API"
 RUN dotnet build "./RafaStore.Identidade.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

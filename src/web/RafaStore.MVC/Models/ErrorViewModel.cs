@@ -1,4 +1,4 @@
-namespace RafaStore.WebApp.MVC.Models
+namespace RafaStore.MVC.Models
 {
     public class ErrorViewModel
     {
