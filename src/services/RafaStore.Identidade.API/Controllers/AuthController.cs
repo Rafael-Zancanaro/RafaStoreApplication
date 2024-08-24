@@ -10,11 +10,10 @@ using System.Text;
 
 namespace RafaStore.Identidade.API.Controllers
 {
-    [ApiController]
     [Route("api/identidade")]
     public class AuthController(SignInManager<IdentityUser> signInManager,
                                 UserManager<IdentityUser> userManager,
-                                IOptions<AppSettings> options) : Controller
+                                IOptions<AppSettings> options) : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager = signInManager;
         private readonly UserManager<IdentityUser> _userManager = userManager;
@@ -23,7 +22,8 @@ namespace RafaStore.Identidade.API.Controllers
         [HttpPost("nova-conta")]
         public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) 
+                return CustomResponse(ModelState);
 
             var user = new IdentityUser
             {
@@ -35,25 +35,37 @@ namespace RafaStore.Identidade.API.Controllers
             var result = await _userManager.CreateAsync(user, usuarioRegistro.Senha);
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return Ok(await GerarJwt(usuarioRegistro.Email));
+                return CustomResponse(await GerarJwt(usuarioRegistro.Email));
             }
 
-            return BadRequest();
+            foreach (var error in result.Errors)
+            {
+                AdicionarErroProcessamento(error.Description);
+            }
+
+            return CustomResponse();
         }
 
         [HttpPost("autenticar")]
         public async Task<ActionResult> Login(UsuarioLogin usuarioLogin)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) 
+                return CustomResponse(ModelState);
 
             var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha, false, true);
             if (result.Succeeded)
             {
-                return Ok(await GerarJwt(usuarioLogin.Email));
+                return CustomResponse(await GerarJwt(usuarioLogin.Email));
             }
 
-            return BadRequest(result);
+            if (result.IsLockedOut)
+            {
+                AdicionarErroProcessamento("Usuário temporariamente bloqueado por tentativas inválidas");
+                return CustomResponse();
+            }
+
+            AdicionarErroProcessamento("Usuário ou Senha incorretos");
+            return CustomResponse();
         }
 
         private async Task<UsuarioRespostaLogin> GerarJwt(string email)
