@@ -52,9 +52,9 @@ namespace RafaStore.Identidade.API.Controllers
             if (result.Succeeded)
                 return CustomResponse(await GerarJwt(usuarioLogin.Email));
 
-            AdicionarErroProcessamento(result.IsLockedOut 
-                ? "Usuário temporariamente bloqueado por tentativas inválidas" 
-                : "Usuário ou Senha incorretos");
+            AdicionarErroProcessamento(result.IsLockedOut
+                ? ErrosResources.UsuarioBloqueado
+                : ErrosResources.UsuarioSenhaIncorreto);
 
             return CustomResponse();
         }
@@ -119,7 +119,7 @@ namespace RafaStore.Identidade.API.Controllers
 
         private static long ToUnixEpochDate(DateTime date)
             => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
-        
+
         #endregion
     }
 }
