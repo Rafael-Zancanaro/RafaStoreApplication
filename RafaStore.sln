@@ -17,11 +17,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{569F4418-F57
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{AC735EFA-ABE8-4580-92A8-32052C63135E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RafaStore.Core", "src\building blocks\RafaStore.Core\RafaStore.Core.csproj", "{E18127FB-A4E8-4892-8CB4-4A151D3D72B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RafaStore.Core", "src\building blocks\RafaStore.Core\RafaStore.Core.csproj", "{E18127FB-A4E8-4892-8CB4-4A151D3D72B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RafaStore.Identidade.API", "src\services\RafaStore.Identidade.API\RafaStore.Identidade.API.csproj", "{27E20183-FDD3-44C2-8D58-07EA2CBC0CA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RafaStore.Identidade.API", "src\services\RafaStore.Identidade.API\RafaStore.Identidade.API.csproj", "{27E20183-FDD3-44C2-8D58-07EA2CBC0CA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RafaStore.MVC", "src\web\RafaStore.MVC\RafaStore.MVC.csproj", "{ED10DA13-8F54-455C-B274-E4743411E793}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RafaStore.WebApp.MVC", "src\web\RafaStore.WebApp.MVC\RafaStore.WebApp.MVC.csproj", "{B3A8B714-DC52-496A-9BE1-06F8A7929B79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{27E20183-FDD3-44C2-8D58-07EA2CBC0CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27E20183-FDD3-44C2-8D58-07EA2CBC0CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27E20183-FDD3-44C2-8D58-07EA2CBC0CA4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED10DA13-8F54-455C-B274-E4743411E793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED10DA13-8F54-455C-B274-E4743411E793}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED10DA13-8F54-455C-B274-E4743411E793}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED10DA13-8F54-455C-B274-E4743411E793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A8B714-DC52-496A-9BE1-06F8A7929B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A8B714-DC52-496A-9BE1-06F8A7929B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A8B714-DC52-496A-9BE1-06F8A7929B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A8B714-DC52-496A-9BE1-06F8A7929B79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,7 +54,7 @@ Global
 		{AC735EFA-ABE8-4580-92A8-32052C63135E} = {A84A3880-7BE4-47E1-B142-32678B197C21}
 		{E18127FB-A4E8-4892-8CB4-4A151D3D72B3} = {AC735EFA-ABE8-4580-92A8-32052C63135E}
 		{27E20183-FDD3-44C2-8D58-07EA2CBC0CA4} = {1362A3D2-DAD9-49D8-904B-60A8C15C7831}
-		{ED10DA13-8F54-455C-B274-E4743411E793} = {569F4418-F572-4D26-BFDC-99487C6B8D82}
+		{B3A8B714-DC52-496A-9BE1-06F8A7929B79} = {569F4418-F572-4D26-BFDC-99487C6B8D82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8462BED5-3FC1-4AE9-BFF1-0F63839B3F3A}

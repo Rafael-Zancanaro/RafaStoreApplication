@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using RafaStore.MVC.Models;
+using RafaStore.WebApp.MVC.Models;
 using System.Diagnostics;
 
-namespace RafaStore.MVC.Controllers
+namespace RafaStore.WebApp.MVC.Controllers
 {
     public class HomeController : Controller
     {

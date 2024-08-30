@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
-namespace RafaStore.Identidade.API.Models
+namespace RafaStore.WebApp.MVC.Models
 {
     public class UsuarioRegistro
     {
@@ -12,6 +13,7 @@ namespace RafaStore.Identidade.API.Models
         [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 6)]
         public string Senha { get; set; }
 
+        [DisplayName("Confirme sua senha")]
         [Compare("Senha", ErrorMessage = "As senhas não conferem.")]
         public string SenhaConfirmacao { get; set; }
     }
@@ -43,7 +45,7 @@ namespace RafaStore.Identidade.API.Models
 
     public class UsuarioClaim
     {
-        public string Type { get; set; }
         public string Value { get; set; }
+        public string Type { get; set; }
     }
 }
