@@ -22,26 +22,18 @@ namespace RafaStore.Identidade.API.Controllers
         {
             var erros = modelState.Values.SelectMany(e => e.Errors);
             foreach (var erro in erros)
-            {
                 AdicionarErroProcessamento(erro.ErrorMessage);
-            }
 
             return CustomResponse();
         }
 
         protected bool OperacaoValida()
-        {
-            return Erros.Count == 0;
-        }
+            => Erros.Count == 0;
 
         protected void AdicionarErroProcessamento(string erro)
-        {
-            Erros.Add(erro);
-        }
+             => Erros.Add(erro);
 
         protected void LimparErrosProcessamento()
-        {
-            Erros.Clear();
-        }
+            => Erros.Clear();
     }
 }

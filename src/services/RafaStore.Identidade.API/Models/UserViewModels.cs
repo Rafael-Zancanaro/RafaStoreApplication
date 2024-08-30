@@ -13,7 +13,7 @@ namespace RafaStore.Identidade.API.Models
         public string Senha { get; set; }
 
         [Compare("Senha", ErrorMessage = "As senhas não conferem.")]
-        public string Senhaconfirmacao { get; set; } 
+        public string Senhaconfirmacao { get; set; }
     }
 
     public class UsuarioLogin
