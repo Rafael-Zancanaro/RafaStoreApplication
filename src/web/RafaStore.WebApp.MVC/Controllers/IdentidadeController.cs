@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace RafaStore.WebApp.MVC.Controllers
 {
-    public class IdentidadeController(IAutenticacaoService autenticacaoService) : Controller
+    public class IdentidadeController(IAutenticacaoService autenticacaoService) : MainController
     {
         [HttpGet("nova-conta")]
         public IActionResult Registro()
@@ -22,12 +22,12 @@ namespace RafaStore.WebApp.MVC.Controllers
             if (!ModelState.IsValid)
                 return View(usuarioRegistro);
 
-            //API - Registro
+            var resposta = await autenticacaoService.Registro(usuarioRegistro);
 
-            if (false)
+            if (ResponsePossuiErros(resposta.ResponseResult))
                 return View(usuarioRegistro);
 
-            // Realiza login na aplicacao
+            await RealizarLogin(resposta);
 
             return RedirectToAction("Index", "Home");
         }
@@ -46,7 +46,8 @@ namespace RafaStore.WebApp.MVC.Controllers
 
             var resposta = await autenticacaoService.Login(usuarioLogin);
 
-            //if (false) return View(usuarioLogin);
+            if (ResponsePossuiErros(resposta.ResponseResult)) 
+                return View(usuarioLogin);
 
             await RealizarLogin(resposta);
 

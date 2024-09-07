@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace RafaStore.WebApp.MVC.Services
 {
-    public class AutenticacaoService(HttpClient client) : IAutenticacaoService
+    public class AutenticacaoService(HttpClient client) : Service, IAutenticacaoService
     {
         public async Task<UsuarioRespostaLogin> Login(UsuarioLogin usuarioLogin)
         {
@@ -20,6 +20,14 @@ namespace RafaStore.WebApp.MVC.Services
             {
                 PropertyNameCaseInsensitive = true
             };
+
+            if (!TratarErrosResponse(response))
+            {
+                return new UsuarioRespostaLogin
+                {
+                    ResponseResult = JsonSerializer.Deserialize<ResponseResult>(await response.Content.ReadAsStringAsync(), jsonOptions)
+                };
+            }
 
             return JsonSerializer.Deserialize<UsuarioRespostaLogin>(await response.Content.ReadAsStringAsync(), jsonOptions);
         }
@@ -37,6 +45,14 @@ namespace RafaStore.WebApp.MVC.Services
             {
                 PropertyNameCaseInsensitive = true
             };
+
+            if (!TratarErrosResponse(response))
+            {
+                return new UsuarioRespostaLogin
+                {
+                    ResponseResult = JsonSerializer.Deserialize<ResponseResult>(await response.Content.ReadAsStringAsync(), jsonOptions)
+                };
+            }
 
             return JsonSerializer.Deserialize<UsuarioRespostaLogin>(await response.Content.ReadAsStringAsync(), jsonOptions);
         }
