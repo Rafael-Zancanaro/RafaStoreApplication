@@ -16,6 +16,7 @@ namespace RafaStore.WebApp.MVC.Configuration
 
         public static void UseIdentityConfiguration(this IApplicationBuilder app)
         {
+            app.UseAuthentication();
             app.UseAuthorization();
         }
     }

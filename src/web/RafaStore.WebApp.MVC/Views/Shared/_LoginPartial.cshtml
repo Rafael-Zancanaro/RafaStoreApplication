@@ -1,11 +1,11 @@
 ﻿@using RafaStore.WebApp.MVC.Extensions
-@inject IUser AppUser; 
+@inject IUser AppUser
 
 <ul class="navbar-nav">
     @if (AppUser.EstaAutenticado())
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" title="Manage">@AppUser.ObterUserEmail()</a>
+            <a class="nav-link text-dark" title="Manage">Olá @AppUser.ObterUserEmail()</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-controller="Identidade" asp-action="Logout">Sair</a>
