@@ -1,4 +1,6 @@
-﻿namespace RafaStore.WebApp.MVC.Configuration
+﻿using RafaStore.WebApp.MVC.Extensions;
+
+namespace RafaStore.WebApp.MVC.Configuration
 {
     public static class WebAppConfig
     {
@@ -13,7 +15,8 @@
                 app.UseDeveloperExceptionPage();
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/erro/500");
+                app.UseStatusCodePagesWithRedirects("/erro/{0}");
                 app.UseHsts();
             }
 
@@ -23,6 +26,8 @@
             app.UseRouting();
 
             app.UseIdentityConfiguration();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
