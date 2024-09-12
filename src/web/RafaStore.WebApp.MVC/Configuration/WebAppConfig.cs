@@ -4,8 +4,9 @@ namespace RafaStore.WebApp.MVC.Configuration
 {
     public static class WebAppConfig
     {
-        public static void AddMvcConfiguration(this IServiceCollection services)
+        public static void AddMvcConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<AppSettings>(configuration);
             services.AddControllersWithViews();
         }
 

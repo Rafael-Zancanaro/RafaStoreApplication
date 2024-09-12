@@ -35,6 +35,8 @@ namespace RafaStore.WebApp.MVC.Models
         public double ExpiresIn { get; set; }
         public UsuarioToken UsuarioToken { get; set; }
         public ResponseResult ResponseResult { get; set; }
+
+        public UsuarioRespostaLogin(ResponseResult responseResult) => ResponseResult = responseResult;
     }
 
     public class UsuarioToken
