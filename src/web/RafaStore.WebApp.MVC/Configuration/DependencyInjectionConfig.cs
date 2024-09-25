@@ -1,17 +1,16 @@
 ﻿using RafaStore.WebApp.MVC.Extensions;
 using RafaStore.WebApp.MVC.Services;
 
-namespace RafaStore.WebApp.MVC.Configuration
+namespace RafaStore.WebApp.MVC.Configuration;
+
+public static class DependencyInjectionConfig
 {
-    public static class DependencyInjectionConfig
+    public static void RegisterServices(this IServiceCollection services)
     {
-        public static void RegisterServices(this IServiceCollection services)
-        {
-            services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
+        services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddScoped<IUser, AspNetUser>();
-        }
+        services.AddScoped<IUser, AspNetUser>();
     }
 }

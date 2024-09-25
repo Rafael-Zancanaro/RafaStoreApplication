@@ -1,6 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using RafaStore.Catalogo.API.Data;
+using RafaStore.Catalogo.API.Data.Repository;
+using RafaStore.Catalogo.API.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<CatalogoContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<CatalogoContext>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

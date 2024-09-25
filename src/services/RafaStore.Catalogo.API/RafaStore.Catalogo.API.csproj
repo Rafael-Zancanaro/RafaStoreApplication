@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>9aee180c-11b9-4d08-9fe4-35f41ba54b55</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
@@ -10,13 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="microsoft.entityframeworkcore" Version="8.0.8" />
+    <PackageReference Include="microsoft.entityframeworkcore.abstractions" Version="8.0.8" />
+    <PackageReference Include="microsoft.entityframeworkcore.relational" Version="8.0.8" />
+    <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="8.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="microsoft.entityframeworkcore.design" Version="8.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\building blocks\RafaStore.Core\RafaStore.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,25 +1,24 @@
-﻿namespace RafaStore.Identidade.API.Configuration
+﻿namespace RafaStore.Identidade.API.Configuration;
+
+public static class ApiConfig
 {
-    public static class ApiConfig
+    public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
     {
-        public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
-        {
-            services.AddControllers();
-            services.AddEndpointsApiExplorer();
+        services.AddControllers();
+        services.AddEndpointsApiExplorer();
 
-            return services;
-        }
+        return services;
+    }
 
-        public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment environment)
-        {
-            if (environment.IsDevelopment())
-                app.UseDeveloperExceptionPage();
+    public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment environment)
+    {
+        if (environment.IsDevelopment())
+            app.UseDeveloperExceptionPage();
 
-            app.UseHttpsRedirection();
+        app.UseHttpsRedirection();
 
-            app.UseIdentityConfiguration();
+        app.UseIdentityConfiguration();
 
-            return app;
-        }
+        return app;
     }
 }
