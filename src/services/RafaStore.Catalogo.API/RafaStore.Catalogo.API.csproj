@@ -1,28 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>9aee180c-11b9-4d08-9fe4-35f41ba54b55</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..\..</DockerfileContext>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>9aee180c-11b9-4d08-9fe4-35f41ba54b55</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..\..</DockerfileContext>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="microsoft.entityframeworkcore" Version="8.0.8" />
-    <PackageReference Include="microsoft.entityframeworkcore.abstractions" Version="8.0.8" />
-    <PackageReference Include="microsoft.entityframeworkcore.relational" Version="8.0.8" />
-    <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="8.0.8" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageReference Include="microsoft.entityframeworkcore.design" Version="8.0.8" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="microsoft.entityframeworkcore" Version="8.0.8" />
+		<PackageReference Include="microsoft.entityframeworkcore.abstractions" Version="8.0.8" />
+		<PackageReference Include="microsoft.entityframeworkcore.relational" Version="8.0.8" />
+		<PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="8.0.8" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+		<PackageReference Include="microsoft.entityframeworkcore.design" Version="8.0.8" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\building blocks\RafaStore.Core\RafaStore.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\building blocks\RafaStore.Core\RafaStore.Core.csproj" />
+	</ItemGroup>
 
 </Project>
