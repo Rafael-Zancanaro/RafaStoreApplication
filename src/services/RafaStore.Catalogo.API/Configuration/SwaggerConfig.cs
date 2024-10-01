@@ -4,7 +4,7 @@ namespace RafaStore.Catalogo.API.Configuration;
 
 public static class SwaggerConfig
 {
-    public static IServiceCollection AddSwaggerConfiguration(this IServiceCollection services)
+    public static void AddSwaggerConfiguration(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>
         {
@@ -20,11 +20,9 @@ public static class SwaggerConfig
                 }
             });
         });
-
-        return services;
     }
 
-    public static IApplicationBuilder UseSwaggerConfiguration(this IApplicationBuilder app, IWebHostEnvironment environment)
+    public static void UseSwaggerConfiguration(this IApplicationBuilder app, IWebHostEnvironment environment)
     {
         if (environment.IsDevelopment())
         {
@@ -34,7 +32,5 @@ public static class SwaggerConfig
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
         }
-
-        return app;
     }
 }
