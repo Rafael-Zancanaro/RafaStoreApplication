@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using RafaStore.Identidade.API.Extensions;
 using RafaStore.Identidade.API.Models;
+using RafaStore.WebAPI.Core.Identidade;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RafaStore.Catalogo.API.Data;
+using RafaStore.WebAPI.Core.Identidade;
 
 namespace RafaStore.Catalogo.API.Configuration;
 
@@ -30,8 +31,12 @@ public static class ApiConfig
             app.UseDeveloperExceptionPage();
 
         app.UseHttpsRedirection();
+
         app.UseRouting();
+
         app.UseCors("Total");
+
+        app.UseJwtConfiguration();
 
         app.UseEndpoints(endpoints => endpoints.MapControllers());
     }

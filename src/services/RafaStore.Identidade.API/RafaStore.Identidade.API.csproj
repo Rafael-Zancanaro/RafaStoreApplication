@@ -25,6 +25,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\RafaStore.WebAPI.Core\RafaStore.WebAPI.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="ErrosResources.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>

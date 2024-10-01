@@ -25,6 +25,5 @@ var app = builder.Build();
 app.UseSwaggerConfiguration(app.Environment);
 
 app.UseApiConfiguration(app.Environment);
-app.MapControllers();
 
 app.Run();

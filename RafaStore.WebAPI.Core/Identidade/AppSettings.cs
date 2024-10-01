@@ -1,4 +1,4 @@
-﻿namespace RafaStore.Identidade.API.Extensions;
+﻿namespace RafaStore.WebAPI.Core.Identidade;
 
 public class AppSettings
 {
