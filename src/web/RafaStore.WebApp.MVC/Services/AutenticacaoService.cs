@@ -13,6 +13,7 @@ public class AutenticacaoService : Service, IAutenticacaoService
 
         _httpClient = client;
     }
+
     public async Task<UsuarioRespostaLogin> Login(UsuarioLogin usuarioLogin)
     {
         var loginContent = ObterConteudo(usuarioLogin);
