@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.Options;
-using RafaStore.WebApp.MVC.Extensions;
-using RafaStore.WebApp.MVC.Models;
+﻿using RafaStore.WebApp.MVC.Models;
+using Refit;
 
 namespace RafaStore.WebApp.MVC.Services;
 
@@ -10,32 +9,11 @@ public interface ICatalogoService
     Task<ProdutoViewModel> ObterPorId(Guid id);
 }
 
-public class CatalogoService : Service, ICatalogoService
+public interface ICatalogoServiceRefit
 {
-    private readonly HttpClient _httpClient;
-
-    public CatalogoService(HttpClient client, IOptions<AppSettings> settings)
-    {
-        client.BaseAddress = new Uri(settings.Value.CatalogoUrl);
-
-        _httpClient = client;
-    }
-
-    public async Task<ProdutoViewModel> ObterPorId(Guid id)
-    {
-        var response = await _httpClient.GetAsync($"/api/catalogo/produtos/{id}");
-
-        TratarErrosResponse(response);
-
-        return await DeserializarObjetoResponse<ProdutoViewModel>(response);
-    }
-
-    public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
-    {
-        var response = await _httpClient.GetAsync($"/api/catalogo/produtos/");
-
-        TratarErrosResponse(response);
-
-        return await DeserializarObjetoResponse<IEnumerable<ProdutoViewModel>>(response);
-    }
+    [Get("/api/catalogo/produtos/")]
+    Task<IEnumerable<ProdutoViewModel>> ObterTodos();
+    
+    [Get("/api/catalogo/produtos/{id}")]
+    Task<ProdutoViewModel> ObterPorId(Guid id);
 }

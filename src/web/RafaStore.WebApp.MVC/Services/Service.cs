@@ -9,15 +9,15 @@ public abstract class Service
 {
     private static JsonSerializerOptions JsonOptions => new() { PropertyNameCaseInsensitive = true };
 
-    protected StringContent ObterConteudo(object dado)
+    protected static StringContent ObterConteudo(object dado)
             => new(JsonSerializer.Serialize(dado),
                     Encoding.UTF8,
                     MediaTypeNames.Application.Json);
 
-    protected async Task<T> DeserializarObjetoResponse<T>(HttpResponseMessage responseMessage)
+    protected static async Task<T> DeserializarObjetoResponse<T>(HttpResponseMessage responseMessage)
         => JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), JsonOptions);
 
-    protected bool TratarErrosResponse(HttpResponseMessage response)
+    protected static bool TratarErrosResponse(HttpResponseMessage response)
     {
         switch ((int)response.StatusCode)
         {
