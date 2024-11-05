@@ -12,7 +12,7 @@ public static class WebAppConfig
 
     public static void UseMvcConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if (!env.IsDevelopment())
+        if (env.IsDevelopment())
             app.UseDeveloperExceptionPage();
         else
         {
@@ -34,7 +34,7 @@ public static class WebAppConfig
         {
             endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Catalogo}/{action=Index}/{id?}");
         });
     }
 }

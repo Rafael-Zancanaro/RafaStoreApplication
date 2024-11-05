@@ -1,29 +1,38 @@
-﻿namespace RafaStore.WebApp.MVC.Extensions;
+﻿using System.Net;
+using Refit;
 
-public class ExceptionMiddleware(RequestDelegate httpContext)
+namespace RafaStore.WebApp.MVC.Extensions;
+
+public class ExceptionMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next = httpContext;
-
     public async Task InvokeAsync(HttpContext httpContext)
     {
         try
         {
-            await _next(httpContext);
+            await next(httpContext);
         }
         catch (CustomHttpRequestException ex)
         {
-            HandleRequestExceptionAsync(httpContext, ex);
+            HandleRequestExceptionAsync(httpContext, ex.StatusCode);
+        }
+        catch (ValidationApiException ex)
+        {
+            HandleRequestExceptionAsync(httpContext, ex.StatusCode);
+        }
+        catch (ApiException ex)
+        {
+            HandleRequestExceptionAsync(httpContext, ex.StatusCode);
         }
     }
 
-    private static void HandleRequestExceptionAsync(HttpContext httpContext, CustomHttpRequestException ex)
+    private static void HandleRequestExceptionAsync(HttpContext httpContext, HttpStatusCode statusCode)
     {
-        if (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        if (statusCode == HttpStatusCode.Unauthorized)
         {
             httpContext.Response.Redirect($"/login?ReturnUrl={httpContext.Request.Path}");
             return;
         }
 
-        httpContext.Response.StatusCode = (int)ex.StatusCode;
+        httpContext.Response.StatusCode = (int)statusCode;
     }
 }
