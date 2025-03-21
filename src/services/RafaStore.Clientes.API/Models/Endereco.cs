@@ -1,6 +1,6 @@
 using RafaStore.Core.DomainObjects;
 
-namespace RafaStore.Cliente.API.Models;
+namespace RafaStore.Clientes.API.Models;
 
 public class Endereco : Entity
 {
@@ -17,12 +17,12 @@ public class Endereco : Entity
 
     public Endereco(string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado)
     {
-        logradouro = logradouro;
-        numero = numero;
-        complemento = complemento;
-        bairro = bairro;
-        cep = cep;
-        cidade = cidade;
-        estado = estado;
+        Logradouro = logradouro;
+        Numero = numero;
+        Complemento = complemento;
+        Bairro = bairro;
+        Cep = cep;
+        Cidade = cidade;
+        Estado = estado;
     }
 }

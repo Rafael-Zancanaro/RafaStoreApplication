@@ -2,10 +2,10 @@ using System.Text.RegularExpressions;
 
 namespace RafaStore.Core.DomainObjects;
 
-public class Email
+public partial class Email
 {
-    private const int EnderecoMaxLength = 254;
-    private const int EnderecoMinLength = 5;
+    public const int EnderecoMaxLength = 254;
+    public const int EnderecoMinLength = 5;
     public string Endereco { get; private set; }
     
     protected Email() { }

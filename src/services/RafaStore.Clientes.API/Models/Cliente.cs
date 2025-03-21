@@ -1,6 +1,6 @@
 using RafaStore.Core.DomainObjects;
 
-namespace RafaStore.Cliente.API.Models;
+namespace RafaStore.Clientes.API.Models;
 
 public class Cliente : Entity, IAggregateRoot
 {

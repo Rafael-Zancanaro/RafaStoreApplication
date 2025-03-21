@@ -18,7 +18,7 @@ public class CatalogoController(IProdutoRepository produtoRepository) : Controll
     }
 
     [ClaimsAuthorize("Catalogo","Ler")]
-    [HttpGet("produtos/{id}")]
+    [HttpGet("produtos/{id:guid}")]
     public async Task<Produto> Get(Guid id)
     {
         return await produtoRepository.ObterPorId(id);

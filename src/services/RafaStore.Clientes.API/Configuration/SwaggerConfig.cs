@@ -1,6 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models;
 
-namespace RafaStore.Catalogo.API.Configuration;
+namespace RafaStore.Clientes.API.Configuration;
 
 public static class SwaggerConfig
 {
@@ -10,8 +10,8 @@ public static class SwaggerConfig
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "RafaStore enterprise Catálogo API",
-                Description = "Esta API é responsável pelo catálogo da loja",
+                Title = "RafaStore enterprise Identity API",
+                Description = "Esta API é responsável pelas informações e manipulação do cliente",
                 Contact = new OpenApiContact() { Name = "Rafael Zancanaro Cardoso", Email = "rafa10_zc@hotmail.com" },
                 License = new OpenApiLicense()
                 {

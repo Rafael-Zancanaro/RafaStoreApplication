@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Polly.CircuitBreaker;
 using Refit;
 
 namespace RafaStore.WebApp.MVC.Extensions;
@@ -23,6 +24,10 @@ public class ExceptionMiddleware(RequestDelegate next)
         {
             HandleRequestExceptionAsync(httpContext, ex.StatusCode);
         }
+        catch (BrokenCircuitException)
+        {
+            HandleCircuitBrakerExceptionAsync(httpContext);
+        }
     }
 
     private static void HandleRequestExceptionAsync(HttpContext httpContext, HttpStatusCode statusCode)
@@ -34,5 +39,10 @@ public class ExceptionMiddleware(RequestDelegate next)
         }
 
         httpContext.Response.StatusCode = (int)statusCode;
+    }
+    
+    private static void HandleCircuitBrakerExceptionAsync(HttpContext httpContext)
+    {
+        httpContext.Response.Redirect("/sistema-indisponivel");
     }
 }

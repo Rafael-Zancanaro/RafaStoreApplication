@@ -13,7 +13,7 @@ namespace RafaStore.Catalogo.API.Migrations
 {
     [DbContext(typeof(CatalogoContext))]
     [Migration("20240925101547_initial")]
-    partial class initial
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

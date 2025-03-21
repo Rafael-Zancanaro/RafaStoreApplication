@@ -20,30 +20,41 @@ public class HomeController : MainController
     {
         var modelErro = new ErrorViewModel();
 
-        if (id == 500)
+        switch (id)
         {
-            modelErro.Mensagem = "Ocorreu um erro! Tente novamente mais tarde ou contate nosso suporte.";
-            modelErro.Titulo = "Ocorreu um erro!";
-            modelErro.ErroCode = id;
-        }
-        else if (id == 404)
-        {
-            modelErro.Mensagem =
-                "A p·gina que est· procurando n„o existe! <br />Em caso de d˙vidas entre em contato com nosso suporte";
-            modelErro.Titulo = "Ops! P·gina n„o encontrada.";
-            modelErro.ErroCode = id;
-        }
-        else if (id == 403)
-        {
-            modelErro.Mensagem = "VocÍ n„o tem permiss„o para fazer isto.";
-            modelErro.Titulo = "Acesso Negado";
-            modelErro.ErroCode = id;
-        }
-        else
-        {
-            return StatusCode(404);
+            case 500:
+                modelErro.Mensagem = "Ocorreu um erro! Tente novamente mais tarde ou contate nosso suporte.";
+                modelErro.Titulo = "Ocorreu um erro!";
+                break;
+            case 404:
+                modelErro.Mensagem =
+                    "A p√°gina que est√° procurando n√£o existe! <br />Em caso de d√∫vidas entre em contato com nosso suporte";
+                modelErro.Titulo = "Ops! P√°gina n√£o encontrada.";
+                break;
+            case 403:
+                modelErro.Mensagem = "Voc√™ n√£o tem permiss√£o para fazer isto.";
+                modelErro.Titulo = "Acesso Negado";
+                break;
+            default:
+                return StatusCode(404);
         }
 
+        modelErro.ErroCode = id;
+
+        return View("Error", modelErro);
+    }
+
+    [Route("sistema-indisponivel")]
+    public IActionResult SistemaIndisponivel()
+    {
+        var modelErro = new ErrorViewModel()
+        {
+            Mensagem =
+                "O sistema est√° temporariamente indispon√≠vel, isto pode ocorrer em momentos de sobrecarga de usu√°rios.",
+            Titulo = "Sistema indispon√≠vel.",
+            ErroCode = 500
+        };
+        
         return View("Error", modelErro);
     }
 }
