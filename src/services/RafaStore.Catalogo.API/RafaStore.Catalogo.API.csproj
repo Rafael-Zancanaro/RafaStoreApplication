@@ -19,8 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\RafaStore.WebAPI.Core\RafaStore.WebAPI.Core.csproj" />
-		<ProjectReference Include="..\..\building blocks\RafaStore.Core\RafaStore.Core.csproj" />
+	  <ProjectReference Include="..\..\building blocks\RafaStore.Core\RafaStore.Core.csproj" />
+	  <ProjectReference Include="..\..\building blocks\RafaStore.WebAPI.Core\RafaStore.WebAPI.Core.csproj" />
 	</ItemGroup>
-
 </Project>

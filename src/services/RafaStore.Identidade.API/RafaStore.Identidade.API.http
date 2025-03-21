@@ -1,6 +1,0 @@
-@RafaStore.Identidade.API_HostAddress = http://localhost:5077
-
-GET {{RafaStore.Identidade.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
