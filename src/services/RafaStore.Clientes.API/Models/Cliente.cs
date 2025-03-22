@@ -12,13 +12,13 @@ public class Cliente : Entity, IAggregateRoot
     
     protected Cliente() { }
     
-    public Cliente(Guid id, string nome, string email, string cpf, bool excluido)
+    public Cliente(Guid id, string nome, string email, string cpf)
     {
         Id = id;
         Nome = nome;
         Email = new Email(email);
         Cpf = new Cpf(cpf);
-        Excluido = excluido;
+        Excluido = false;
     }
 
     public void TrocarEmail(string email)

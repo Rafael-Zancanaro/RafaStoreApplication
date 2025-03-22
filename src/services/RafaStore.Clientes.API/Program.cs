@@ -1,3 +1,4 @@
+using MediatR;
 using RafaStore.Clientes.API.Configuration;
 using RafaStore.WebAPI.Core.Identidade;
 
@@ -17,6 +18,8 @@ builder.Services.AddApiConfiguration(builder.Configuration);
 builder.Services.AddJwtConfiguration(builder.Configuration);
 
 builder.Services.AddSwaggerConfiguration();
+
+builder.Services.AddMediatR(typeof(Program));
 
 builder.Services.RegisterServices();
 
