@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace RafaStore.Identidade.API.Controllers;
+namespace RafaStore.WebAPI.Core.Controllers;
 
 [ApiController]
 public abstract class MainController : Controller
@@ -26,12 +27,20 @@ public abstract class MainController : Controller
 
         return CustomResponse();
     }
+    
+    protected ActionResult CustomResponse(ValidationResult validationResult)
+    {
+        foreach (var erro in validationResult.Errors)
+            AdicionarErroProcessamento(erro.ErrorMessage);
+
+        return CustomResponse();
+    }
 
     protected bool OperacaoValida()
         => Erros.Count == 0;
 
     protected void AdicionarErroProcessamento(string erro)
-         => Erros.Add(erro);
+        => Erros.Add(erro);
 
     protected void LimparErrosProcessamento()
         => Erros.Clear();

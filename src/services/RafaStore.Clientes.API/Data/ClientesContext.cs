@@ -1,8 +1,10 @@
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using RafaStore.Clientes.API.Models;
 using RafaStore.Core.Data;
 using RafaStore.Core.DomainObjects;
 using RafaStore.Core.Mediator;
+using RafaStore.Core.Messages;
 
 namespace RafaStore.Clientes.API.Data;
 
@@ -21,6 +23,9 @@ public sealed class ClientesContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<ValidationResult>();
+        modelBuilder.Ignore<Event>();
+        
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClientesContext).Assembly);
         
         foreach (var property in modelBuilder.Model.GetEntityTypes()

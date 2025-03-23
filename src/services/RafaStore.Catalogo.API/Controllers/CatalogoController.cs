@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RafaStore.Catalogo.API.Models;
+using RafaStore.WebAPI.Core.Controllers;
 using RafaStore.WebAPI.Core.Identidade;
 
 namespace RafaStore.Catalogo.API.Controllers;
@@ -8,7 +9,7 @@ namespace RafaStore.Catalogo.API.Controllers;
 [Route("api/catalogo")]
 [ApiController]
 [Authorize]
-public class CatalogoController(IProdutoRepository produtoRepository) : Controller
+public class CatalogoController(IProdutoRepository produtoRepository) : MainController
 {
     [AllowAnonymous]
     [HttpGet("produtos")]
