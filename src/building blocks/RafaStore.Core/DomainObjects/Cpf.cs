@@ -1,3 +1,5 @@
+using RafaStore.Core.Utils;
+
 namespace RafaStore.Core.DomainObjects;
 
 public class Cpf
@@ -17,7 +19,7 @@ public class Cpf
     {
         if (string.IsNullOrWhiteSpace(cpf)) return false;
 
-        cpf = new string(cpf.Where(char.IsDigit).ToArray());
+        cpf = cpf.ApenasNumeros(cpf);
 
         if (cpf.Length != CpfMaxLength) return false;
 

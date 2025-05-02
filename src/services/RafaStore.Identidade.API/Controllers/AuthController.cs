@@ -7,18 +7,18 @@ using RafaStore.WebAPI.Core.Identidade;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using RafaStore.Core.Messages.Integration;
+using RafaStore.MessageBus;
+using RafaStore.WebAPI.Core.Controllers;
 
 namespace RafaStore.Identidade.API.Controllers;
 
 [Route("api/identidade")]
 public class AuthController(SignInManager<IdentityUser> signInManager,
                             UserManager<IdentityUser> userManager,
-                            IOptions<AppSettings> options) : MainController
+                            IOptions<AppSettings> appSettings,
+                            IMessageBus bus) : MainController
 {
-    private readonly SignInManager<IdentityUser> _signInManager = signInManager;
-    private readonly UserManager<IdentityUser> _userManager = userManager;
-    private readonly AppSettings _appSettings = options.Value;
-
     [HttpPost("nova-conta")]
     public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
     {
@@ -32,9 +32,17 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
             EmailConfirmed = true
         };
 
-        var result = await _userManager.CreateAsync(user, usuarioRegistro.Senha);
+        var result = await userManager.CreateAsync(user, usuarioRegistro.Senha);
         if (result.Succeeded)
-            return CustomResponse(await GerarJwt(usuarioRegistro.Email));
+        {
+            var clienteResult = await RegistrarCliente(usuarioRegistro);
+            if (clienteResult.ValidationResult.IsValid) 
+                return CustomResponse(await GerarJwt(usuarioRegistro.Email));
+            
+            await userManager.DeleteAsync(user);
+                
+            return CustomResponse(clienteResult.ValidationResult);
+        }
 
         foreach (var error in result.Errors)
             AdicionarErroProcessamento(error.Description);
@@ -48,7 +56,7 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
         if (!ModelState.IsValid)
             return CustomResponse(ModelState);
 
-        var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha, false, true);
+        var result = await signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha, false, true);
         if (result.Succeeded)
             return CustomResponse(await GerarJwt(usuarioLogin.Email));
 
@@ -63,8 +71,8 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
 
     private async Task<UsuarioRespostaLogin> GerarJwt(string email)
     {
-        var user = await _userManager.FindByEmailAsync(email);
-        var claims = await _userManager.GetClaimsAsync(user);
+        var user = await userManager.FindByEmailAsync(email);
+        var claims = await userManager.GetClaimsAsync(user);
 
         var identityClaims = await ObterClaimUsuario(claims, user);
         var encodedToken = CodificarToken(identityClaims);
@@ -80,7 +88,7 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
         claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
         claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
 
-        var userRoles = await _userManager.GetRolesAsync(user);
+        var userRoles = await userManager.GetRolesAsync(user);
         foreach (var userRole in userRoles)
             claims.Add(new Claim("role", userRole));
 
@@ -90,14 +98,14 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
     private string CodificarToken(ClaimsIdentity identityClaims)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+        var key = Encoding.ASCII.GetBytes(appSettings.Value.Secret);
 
         var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
         {
-            Issuer = _appSettings.Emissor,
-            Audience = _appSettings.ValidoEm,
+            Issuer = appSettings.Value.Emissor,
+            Audience = appSettings.Value.ValidoEm,
             Subject = identityClaims,
-            Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
+            Expires = DateTime.UtcNow.AddHours(appSettings.Value.ExpiracaoHoras),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         });
 
@@ -108,7 +116,7 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
          => new()
          {
              AccessToken = encodedToken,
-             ExpiresIn = TimeSpan.FromHours(_appSettings.ExpiracaoHoras).TotalSeconds,
+             ExpiresIn = TimeSpan.FromHours(appSettings.Value.ExpiracaoHoras).TotalSeconds,
              UsuarioToken = new UsuarioToken
              {
                  Id = user.Id,
@@ -120,5 +128,25 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
     private static long ToUnixEpochDate(DateTime date)
         => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
 
+    
+    
+    private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
+    {
+        var usuario = await userManager.FindByEmailAsync(usuarioRegistro.Email);
+        
+        var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(Guid.Parse(usuario.Id), usuarioRegistro.Nome,
+            usuarioRegistro.Email, usuarioRegistro.Cpf);
+
+        try
+        {
+            return await bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+        }
+        catch
+        {
+            await userManager.DeleteAsync(usuario);
+            throw;
+        }
+    }
+    
     #endregion
 }

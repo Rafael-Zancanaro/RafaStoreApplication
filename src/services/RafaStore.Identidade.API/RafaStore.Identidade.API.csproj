@@ -9,6 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="EasyNetQ.Serialization.NewtonsoftJson" Version="7.8.0" />
 		<PackageReference Include="microsoft.aspnetcore.authentication.jwtbearer" Version="8.0.8" />
 		<PackageReference Include="microsoft.aspnetcore.identity.entityframeworkcore" Version="8.0.8" />
 		<PackageReference Include="microsoft.aspnetcore.identity.ui" Version="8.0.8" />
@@ -25,8 +26,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\RafaStore.WebAPI.Core\RafaStore.WebAPI.Core.csproj" />
+	  <ProjectReference Include="..\..\building blocks\RafaStore.Core\RafaStore.Core.csproj" />
+		<ProjectReference Include="..\..\building blocks\RafaStore.MessageBus\RafaStore.MessageBus.csproj" />
 	  <ProjectReference Include="..\..\building blocks\RafaStore.WebAPI.Core\RafaStore.WebAPI.Core.csproj" />
+	  <ProjectReference Include="..\RafaStore.Clientes.API\RafaStore.Clientes.API.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
 using RafaStore.Catalogo.API.Models;
 using RafaStore.Core.Data;
+using RafaStore.Core.Messages;
 
 namespace RafaStore.Catalogo.API.Data;
 
@@ -10,6 +12,9 @@ public class CatalogoContext(DbContextOptions<CatalogoContext> options) : DbCont
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<ValidationResult>();
+        modelBuilder.Ignore<Event>();
+        
         foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
             property.SetColumnType("varchar(100)");
 

@@ -1,3 +1,3 @@
 ﻿namespace RafaStore.Core.DomainObjects;
 
-public interface IAggregateRoot { }
+public interface IAggregateRoot;

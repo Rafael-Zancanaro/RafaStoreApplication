@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="EasyNetQ.Serialization.NewtonsoftJson" Version="7.8.0" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
         <PackageReference Include="microsoft.entityframeworkcore.relational" Version="8.0.8" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
@@ -18,12 +20,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\" />
-      <Folder Include="Controllers\" />
+      <Folder Include="Application\Queries\" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\building blocks\RafaStore.Core\RafaStore.Core.csproj" />
+      <ProjectReference Include="..\..\building blocks\RafaStore.MessageBus\RafaStore.MessageBus.csproj" />
       <ProjectReference Include="..\..\building blocks\RafaStore.WebAPI.Core\RafaStore.WebAPI.Core.csproj" />
     </ItemGroup>
 

@@ -18,6 +18,8 @@ services.AddApiConfiguration();
 
 services.AddSwaggerConfiguration();
 
+services.AddMessageBusConfiguration(builder.Configuration);
+
 
 //App Builder
 var app = builder.Build();

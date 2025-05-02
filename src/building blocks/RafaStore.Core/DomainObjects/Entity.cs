@@ -1,8 +1,25 @@
-﻿namespace RafaStore.Core.DomainObjects;
+﻿using RafaStore.Core.Messages;
+
+namespace RafaStore.Core.DomainObjects;
 
 public abstract class Entity
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
+
+    private List<Event> _notifications;
+    public IReadOnlyCollection<Event> Notifications => _notifications?.AsReadOnly();
+
+    public void AdicionarEvento(Event evento)
+    {
+        _notifications ??= [];
+        _notifications.Add(evento);
+    }
+    
+    public void RemoverEvento(Event evento)
+        => _notifications?.Remove(evento);
+    
+    public void LimparEventos()
+        => _notifications?.Clear();
 
     public override bool Equals(object obj)
     {

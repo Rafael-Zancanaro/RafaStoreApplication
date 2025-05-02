@@ -10,7 +10,7 @@ public static class SwaggerConfig
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "RafaStore enterprise Identity API",
+                Title = "RafaStore enterprise Cliente API",
                 Description = "Esta API é responsável pelas informações e manipulação do cliente",
                 Contact = new OpenApiContact() { Name = "Rafael Zancanaro Cardoso", Email = "rafa10_zc@hotmail.com" },
                 License = new OpenApiLicense()
