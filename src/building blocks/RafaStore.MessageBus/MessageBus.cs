@@ -3,11 +3,11 @@ using Polly;
 using RabbitMQ.Client.Exceptions;
 using RafaStore.Core.Messages.Integration;
 
-namespace Rafa.MessageBus;
+namespace RafaStore.MessageBus;
 
 public class MessageBus : IMessageBus
 {
-    private IBus _bus;
+    private IBus _bus = null!;
     private readonly string _connectionString;
 
     public MessageBus(string connectionString)

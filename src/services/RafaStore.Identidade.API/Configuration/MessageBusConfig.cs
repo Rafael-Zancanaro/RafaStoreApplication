@@ -2,7 +2,7 @@ using RafaStore.Clientes.API.Services;
 using RafaStore.Core.Utils;
 using RafaStore.MessageBus;
 
-namespace RafaStore.Clientes.API.Configuration;
+namespace RafaStore.Identidade.API.Configuration;
 
 public static class MessageBusConfig
 {

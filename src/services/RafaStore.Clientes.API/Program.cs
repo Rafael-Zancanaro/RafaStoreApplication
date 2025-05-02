@@ -23,6 +23,8 @@ builder.Services.AddMediatR(typeof(Program));
 
 builder.Services.RegisterServices();
 
+builder.Services.AddMessageBusConfiguration(builder.Configuration);
+
 //App
 var app = builder.Build();
 

@@ -1,6 +1,6 @@
 using RafaStore.Core.Messages.Integration;
 
-namespace Rafa.MessageBus;
+namespace RafaStore.MessageBus;
 
 public interface IMessageBus : IDisposable
 {
@@ -12,7 +12,7 @@ public interface IMessageBus : IDisposable
     TResponse Request<TRequest, TResponse>(TRequest request)
         where TRequest : IntegrationEvent
         where TResponse : ResponseMessage;
-    Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request)
+    public Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request)
         where TRequest : IntegrationEvent
         where TResponse : ResponseMessage;
     IDisposable Respond<TRequest, TResponse>(Func<TRequest, TResponse> responder)

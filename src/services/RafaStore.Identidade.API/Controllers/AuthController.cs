@@ -7,8 +7,8 @@ using RafaStore.WebAPI.Core.Identidade;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using EasyNetQ;
 using RafaStore.Core.Messages.Integration;
+using RafaStore.MessageBus;
 using RafaStore.WebAPI.Core.Controllers;
 
 namespace RafaStore.Identidade.API.Controllers;
@@ -17,7 +17,7 @@ namespace RafaStore.Identidade.API.Controllers;
 public class AuthController(SignInManager<IdentityUser> signInManager,
                             UserManager<IdentityUser> userManager,
                             IOptions<AppSettings> appSettings,
-                            IBus bus) : MainController
+                            IMessageBus bus) : MainController
 {
     [HttpPost("nova-conta")]
     public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
@@ -35,28 +35,19 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
         var result = await userManager.CreateAsync(user, usuarioRegistro.Senha);
         if (result.Succeeded)
         {
-            //Todo
-            var sucesso = await RegistrarCliente(usuarioRegistro);
+            var clienteResult = await RegistrarCliente(usuarioRegistro);
+            if (clienteResult.ValidationResult.IsValid) 
+                return CustomResponse(await GerarJwt(usuarioRegistro.Email));
             
-            return CustomResponse(await GerarJwt(usuarioRegistro.Email));
+            await userManager.DeleteAsync(user);
+                
+            return CustomResponse(clienteResult.ValidationResult);
         }
 
         foreach (var error in result.Errors)
             AdicionarErroProcessamento(error.Description);
 
         return CustomResponse();
-    }
-    
-    private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
-    {
-        var usuario = await userManager.FindByEmailAsync(usuarioRegistro.Email);
-        
-        var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(Guid.Parse(usuario.Id), usuarioRegistro.Nome,
-            usuarioRegistro.Email, usuarioRegistro.Cpf);
-
-        var sucesso = await bus.Rpc.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
-        
-        return sucesso;
     }
 
     [HttpPost("autenticar")]
@@ -137,5 +128,25 @@ public class AuthController(SignInManager<IdentityUser> signInManager,
     private static long ToUnixEpochDate(DateTime date)
         => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
 
+    
+    
+    private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
+    {
+        var usuario = await userManager.FindByEmailAsync(usuarioRegistro.Email);
+        
+        var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(Guid.Parse(usuario.Id), usuarioRegistro.Nome,
+            usuarioRegistro.Email, usuarioRegistro.Cpf);
+
+        try
+        {
+            return await bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+        }
+        catch
+        {
+            await userManager.DeleteAsync(usuario);
+            throw;
+        }
+    }
+    
     #endregion
 }
