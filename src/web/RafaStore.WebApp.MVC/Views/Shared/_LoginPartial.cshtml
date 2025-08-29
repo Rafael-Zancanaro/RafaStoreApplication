@@ -1,5 +1,6 @@
-﻿@using RafaStore.WebApp.MVC.Extensions
-@inject IUser AppUser
+﻿@using RafaStore.WebAPI.Core.Usuario
+@using RafaStore.WebApp.MVC.Extensions
+@inject IAspNetUser AppUser
 
 @if (AppUser.EstaAutenticado())
 {

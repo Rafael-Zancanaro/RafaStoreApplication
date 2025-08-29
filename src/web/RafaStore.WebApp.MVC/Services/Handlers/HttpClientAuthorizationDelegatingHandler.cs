@@ -1,9 +1,10 @@
 using System.Net.Http.Headers;
+using RafaStore.WebAPI.Core.Usuario;
 using RafaStore.WebApp.MVC.Extensions;
 
 namespace RafaStore.WebApp.MVC.Services.Handlers;
 
-public class HttpClientAuthorizationDelegatingHandler(IUser user) : DelegatingHandler
+public class HttpClientAuthorizationDelegatingHandler(IAspNetUser user) : DelegatingHandler
 {
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
         CancellationToken cancellationToken)
