@@ -1,3 +1,4 @@
+using EasyNetQ;
 using RafaStore.Core.Messages.Integration;
 
 namespace RafaStore.MessageBus;
@@ -5,6 +6,8 @@ namespace RafaStore.MessageBus;
 public interface IMessageBus : IDisposable
 {
     bool IsConnected { get; }
+    IAdvancedBus AdvancedBus { get; }
+
     void Publish<T>(T message) where T : IntegrationEvent;
     Task PublishAsync<T>(T message) where T : IntegrationEvent;
     void Subscribe<T>(string subscriptionId, Action<T> onMessage) where T : class;

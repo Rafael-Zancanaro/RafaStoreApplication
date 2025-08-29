@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Polly;
+using RafaStore.WebAPI.Core.Usuario;
 using RafaStore.WebApp.MVC.Extensions;
 using RafaStore.WebApp.MVC.Services;
 using RafaStore.WebApp.MVC.Services.Handlers;
@@ -23,6 +24,6 @@ public static class DependencyInjectionConfig
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-        services.AddScoped<IUser, AspNetUser>();
+        services.AddScoped<IAspNetUser, AspNetUser>();
     }
 }
