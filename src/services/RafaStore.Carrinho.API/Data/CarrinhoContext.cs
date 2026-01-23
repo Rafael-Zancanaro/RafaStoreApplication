@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RafaStore.Carrinho.API.Model;
+using System.ComponentModel.DataAnnotations;
 
 namespace RafaStore.Carrinho.API.Data;
 
@@ -19,6 +20,8 @@ public class CarrinhoContext : DbContext
 		foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
 			e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
 			property.SetColumnType("varchar(100)");
+
+		modelBuilder.Ignore<ValidationResult>();
 
 		modelBuilder.Entity<CarrinhoCliente>()
 			.HasIndex(c => c.ClienteId)

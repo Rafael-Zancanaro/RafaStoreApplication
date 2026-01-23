@@ -28,6 +28,7 @@ public class CarrinhoController(IAspNetUser user, CarrinhoContext context) : Mai
         else
             ManipularCarrinhoExistente(carrinho, item);
 
+        ValidarCarrinho(carrinho);
         if (!OperacaoValida()) return CustomResponse();
 
         await PersistirDados();
@@ -43,6 +44,9 @@ public class CarrinhoController(IAspNetUser user, CarrinhoContext context) : Mai
 
         carrinho.AtualizarUnidades(itemCarrinho, item.Quantidade);
 
+        ValidarCarrinho(carrinho);
+        if (!OperacaoValida()) return CustomResponse();
+
         context.CarrinhoItens.Update(itemCarrinho);
         context.CarrinhoCliente.Update(carrinho);
 
@@ -56,6 +60,9 @@ public class CarrinhoController(IAspNetUser user, CarrinhoContext context) : Mai
         var carrinho = await ObterCarrinhoCliente();
         var itemCarrinho = await ObterCarrinhoItemValidado(produtoId, carrinho);
         if(itemCarrinho == null) return CustomResponse();
+
+        ValidarCarrinho(carrinho);
+        if (!OperacaoValida()) return CustomResponse();
 
         carrinho.RemoverItem(itemCarrinho);
 
@@ -124,5 +131,14 @@ public class CarrinhoController(IAspNetUser user, CarrinhoContext context) : Mai
     {
         var result = await context.SaveChangesAsync();
         if (result <= 0) AdicionarErroProcessamento("Não foi possível persistir os dados no banco");
+    }
+
+    private bool ValidarCarrinho(CarrinhoCliente carrinho)
+    {
+        if (carrinho.EhValido()) return true;
+
+        carrinho.ValidationResult.Errors.ForEach(error => AdicionarErroProcessamento(error.ErrorMessage));
+
+        return false;
     }
 }
