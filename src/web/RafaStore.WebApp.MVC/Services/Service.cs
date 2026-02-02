@@ -1,4 +1,5 @@
 ﻿using RafaStore.WebApp.MVC.Extensions;
+using RafaStore.WebApp.MVC.Models;
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
@@ -29,9 +30,14 @@ public abstract class Service
 
             case 400:
                 return false;
-        };
+        }
 
         response.EnsureSuccessStatusCode();
         return true;
+    }
+
+    protected static ResponseResult RetornoOK()
+    {
+        return new ResponseResult();
     }
 }
