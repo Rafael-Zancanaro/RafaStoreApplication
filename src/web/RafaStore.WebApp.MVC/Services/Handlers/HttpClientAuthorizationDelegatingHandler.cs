@@ -12,7 +12,7 @@ public class HttpClientAuthorizationDelegatingHandler(IAspNetUser user) : Delega
         var authorization = user.ObterHttpContext().Request.Headers.Authorization;
 
         if (!string.IsNullOrWhiteSpace(authorization))
-            request.Headers.Add("Authorization", new List<string> { authorization });
+            request.Headers.Add("Authorization", [authorization]);
 
         var token = user.ObterUserToken();
 
